@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>客服</title>
+<script th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/page/customerSocket.js}"></script>
+<script th:src="@{/js/wangEditor.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/pure/buttons-core-min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/pure/buttons-min.css}">
+
+<style type="text/css">
+#content_left div:not(.selected ):hover {
+	background-color: #bce3fa66 !important;
+}
+
+.selected {
+	background-color: #bce3f5;
+}
+
+.msgTip {
+	position: absolute;
+	top: -3px;
+	right: -4px;
+	background-color: red;
+	box-sizing: border-box;
+	border-radius: 10px;
+	line-height: 1.4;
+	color: white;
+	font-size: 10px;
+	text-align: center;
+	height: 17px;
+	display: inline-block;
+	padding: 0 5px;
+}
+
+body {
+	margin: 0px;
+	height: 100%;
+}
+
+#top {
+	min-width: 720px;
+}
+
+.top_title {
+	width: 100%;
+	height: 70px;
+	background-color: #00abf0;
+	text-align: right;
+	line-height: 4.1;
+}
+
+.top_title_left {
+	float: left;
+	margin-left: 25px;
+	color: white;
+}
+
+.top_title_right {
+	margin-right: 25px;
+}
+
+#content {
+	min-width: 720px;
+	min-height: 400px;
+}
+
+#content_left {
+	overflow: auto;
+	background-color: #00abf0;
+	height: 99.5%;
+	border-top: 2px solid white;
+	width: 239px;
+	float: left;
+	border-right: 1px solid #dcdcdc;
+	text-align: center;
+	background-color: #00abf0;
+	height: 99.5%;
+	border-top: 2px solid white;
+	width: 239px;
+	float: left;
+	border-right: 1px solid #dcdcdc;
+}
+
+#content_right {
+	height: 100%;
+	float: right;
+	min-width: 80px;
+}
+
+#content_right_top {
+	width: 100%;
+}
+
+#content_right_bottom {
+	height: 169px;
+	border-top: 1px solid #dcdcdc;
+}
+
+#input_menu {
+	width: 100%;
+	height: 39px;
+	border-bottom: 1px solid #dcdcdc;
+	line-height: 3.2;
+}
+
+#input_text {
+	height: 79px;
+}
+
+#msgInput {
+	width: 100%;
+	height: 100%;
+	resize: none;
+	border: none;
+	outline: none;
+	font-size: 14px;
+	font-family: 微软雅黑;
+}
+
+#input_sendButton {
+	height: 49px;
+	text-align: right;
+}
+
+.outter_sendButton {
+	padding-right: 15px;
+	font-size: 14px;
+	padding-top: 10px;
+}
+
+.sendButton {
+	padding: .4em .5em;
+}
+
+
+.icon_style {
+	margin-left: 30px;
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+}
+
+.icon_style:hover {
+	filter:brightness(50%);
+	mix-blend-mode: color-burn;
+}
+
+.color-container {
+    width: 240px;
+    height: 48px;
+    margin: auto;
+    _width: 250px;
+    display: block;
+    padding: 0;
+}
+
+.color-item {
+    float: left;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    margin: 1px;
+    font-size: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.color-item-wrapper {
+    float: left;
+    margin: 4px;
+}
+
+ul{
+	list-style: none;
+}
+
+.w-e-panel-container{
+	width:500px !important;
+	left: 0px !important;
+	margin-left:0px !important;
+}
+.w-e-text-container .w-e-panel-container{
+	left: 0px !important;
+}
+
+div::-webkit-scrollbar{
+  width:5px;
+  height:5px;
+  /**/
+}
+div::-webkit-scrollbar-track{
+  background: rgb(239, 239, 239);
+  border-radius:2px;
+}
+div::-webkit-scrollbar-thumb{
+  background: #bfbfbf;
+  border-radius:10px;
+}
+div::-webkit-scrollbar-thumb:hover{
+  background: #333;
+}
+div::-webkit-scrollbar-corner{
+  background: #179a16;
+}
+</style>
+
+</head>
+<body>
+
+	<!-- 	top -->
+	<div id="top">
+		<div class="top_title">
+			<div class="top_title_left">易网通在线客服系统</div>
+			<div class="top_title_right"></div>
+		</div>
+	</div>
+
+	<div id="content">
+
+		<!-- 客户聊天列表 -->
+		<div id="content_left"></div>
+
+		<!-- 聊天窗口 -->
+		<div id="content_right">
+
+			<!-- right_top -->
+			<div id="content_right_top">
+			</div>
+
+			<!-- right_bottom -->
+			<div id="content_right_bottom">
+				<!-- 输入选项菜单 -->
+				<div id="input_menu" style="border-bottom: 1px solid #dcdcdc;">
+				</div>
+
+				<!-- 输入框 -->
+				<div id="msgInput" style="height: 210px;"></div>
+
+				<!-- 发送按钮 -->
+				<div id="input_sendButton">
+					<div class="outter_sendButton">
+						<button class="pure-button pure-button-primary sendButton"
+							onclick="customerSocket.send();">&nbsp;&nbsp;发送&nbsp;&nbsp;| <span>▼</span></button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

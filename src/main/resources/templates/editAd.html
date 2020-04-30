@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" http-equiv="Access-Control-Allow-Origin"
+	content="*" />
+<title>编辑广告</title>
+<script th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/wangEditor.min.js}"></script>
+</head>
+<body>
+
+	<div id="edit_ad_meun" style="border: 1px solid #cccccc;background-color: #f1f1f1;"></div>
+	<div id="edit_ad_content" style="height: 500px;border: 1px solid #cccccc;border-top: none;">
+	</div>
+	<div style="text-align: center;padding: 10px;">
+		<button onclick="saveAd();">保存</button>
+		<button onclick="goback();">返回</button>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	var E = window.wangEditor
+	editor = new E('#edit_ad_meun','#edit_ad_content');
+	editor.customConfig.menus = [
+		'head',  // 标题
+	    'bold',  // 粗体
+	    'fontSize',  // 字号
+	    'fontName',  // 字体
+	    'italic',  // 斜体
+	    'underline',  // 下划线
+	    'strikeThrough',  // 删除线
+	    'foreColor',  // 文字颜色
+	    'backColor',  // 背景颜色
+	    'link',  // 插入链接
+	    'list',  // 列表
+	    'justify',  // 对齐方式
+	    'quote',  // 引用
+	    'emoticon',  // 表情
+	    'image',  // 插入图片
+	    'table',  // 表格
+	    'undo',  // 撤销
+	    'redo'  // 重复
+    ];
+	editor.customConfig.uploadImgShowBase64 = true;
+	editor.create();
+	editor.txt.html(htmlEncodeByRegExp("[[${old_ad}]]"));
+	
+	function goback(){
+		window.location.href = "/index";
+	}
+	
+	function saveAd(){
+		$.ajax({
+			url : "/saveAd",
+			dataType : "json",
+			data : {
+				"context" : editor.txt.html()
+			},
+			success : function(data) {
+				alert(data);
+			}
+		})
+	}
+	
+	function htmlEncodeByRegExp(str) {
+		var s = "";
+		if (str.length == 0)
+			return "";
+		s = str.replace(/&amp;/g, "&");
+		s = s.replace(/&lt;/g, "<");
+		s = s.replace(/&gt;/g, ">");
+		s = s.replace(/&nbsp;/g, " ");
+		s = s.replace(/&#39;/g, "'");
+		s = s.replace(/&quot;/g, '"');
+		return s;
+	}
+</script>
+</html>

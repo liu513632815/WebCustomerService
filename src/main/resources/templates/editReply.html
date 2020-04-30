@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" http-equiv="Access-Control-Allow-Origin"
+	content="*" />
+<title>编辑回复</title>
+</head>
+<script th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/wangEditor.min.js}"></script>
+<body>
+	<div id="edit_reply">
+		<p th:text="${old_reply}"></p>
+	</div>
+	<div style="text-align: center; padding: 10px;">
+		<button onclick="saveAd();">保存</button>
+		<button onclick="goback();">返回</button>
+	</div>
+</body>
+
+<script type="text/javascript">
+	var E = window.wangEditor
+	editor = new E('#edit_reply');
+	editor.customConfig.menus = [ 'bold', // 粗体
+	'fontSize', // 字号
+	'fontName', // 字体
+	'italic', // 斜体
+	'underline', // 下划线
+	'strikeThrough', // 删除线
+	'foreColor', // 文字颜色
+	'emoticon', // 表情
+	'undo', // 撤销
+	'redo' // 重复
+	];
+	editor.customConfig.uploadImgShowBase64 = true;
+	editor.create();
+	editor.txt.html(htmlEncodeByRegExp("[[${old_reply}]]"));
+
+	function goback() {
+		window.location.href = "/index";
+	}
+
+	function saveAd() {
+		$.ajax({
+			url : "/saveReply",
+			dataType : "json",
+			data : {
+				"context" : editor.txt.html()
+			},
+			success : function(data) {
+				alert(data);
+			}
+		})
+	}
+
+	function htmlEncodeByRegExp(str) {
+		var s = "";
+		if (str.length == 0)
+			return "";
+		s = str.replace(/&amp;/g, "&");
+		s = s.replace(/&lt;/g, "<");
+		s = s.replace(/&gt;/g, ">");
+		s = s.replace(/&nbsp;/g, " ");
+		s = s.replace(/&#39;/g, "'");
+		s = s.replace(/&quot;/g, '"');
+		return s;
+	}
+</script>
+</html>

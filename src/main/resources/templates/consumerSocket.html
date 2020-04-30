@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>在线咨询</title>
+<script th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/page/consumerSocket.js}"></script>
+<script th:src="@{/js/wangEditor.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/pure/buttons-core-min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/pure/buttons-min.css}">
+
+<style type="text/css">
+.pure-button-primary {
+	background-color: #00abf0;
+	color: #fff;
+	border: 1px solid;
+	padding: .3em .5em;
+	border-radius: 4px;
+}
+
+body {
+	margin: 0px;
+	height: 100%;
+}
+
+#top {
+	min-width: 720px;
+}
+
+.title {
+	width: 100%;
+	height: 70px;
+	background-color: #00abf0;
+	text-align: right;
+	line-height: 4.1;
+}
+
+.top_title_left {
+	float: left;
+	margin-left: 25px;
+	color: white;
+}
+
+.top_title_right {
+	margin-right: 25px;
+}
+
+#content {
+	min-width: 720px;
+	min-height: 400px;
+}
+
+#content_left {
+	height: 100%;
+	float: left;
+	min-width: 80px;
+}
+
+#content_left_top {
+	width: 100%;
+}
+
+#msgShow {
+	height: 100%;
+	overflow: auto;
+	padding: 0px 15px 0px 15px;
+}
+
+#content_left_bottom {
+	width: 100%;
+	height: 299px;
+	border-top: 1px solid #dcdcdc;
+}
+
+#input_menu {
+	height: 39px;
+	border-bottom: 1px solid #dcdcdc;
+	line-height: 3.2;
+}
+
+#msgInput {
+	width: 100%;
+	resize: none;
+	border: none;
+	outline: none;
+	font-size: 14px;
+	font-family: 微软雅黑;
+}
+
+#input_sendButton {
+	height: 49px;
+	text-align: right;
+}
+
+.outter_sendButton {
+	padding-right: 15px;
+	font-size: 14px;
+	padding-top: 10px;
+}
+
+.sendButton {
+	padding: .4em .5em;
+}
+
+#content_right {
+	height: 100%;
+	width: 239px;
+	float: right;
+	border-left: 1px solid #dcdcdc;
+	text-align: center;
+}
+
+.userImg {
+	margin-top: 20px;
+}
+
+.slogan_world {
+	margin: 15px 18px 0 18px;
+	text-align: left;
+	font-size: 14px;
+}
+
+.icon_style {
+	margin-left: 30px;
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+}
+
+.icon_style:hover {
+	filter: brightness(50%);
+	mix-blend-mode: color-burn;
+}
+
+.color-container{
+	width: 240px;
+    height: 48px;
+    margin: auto;
+    _width: 250px;
+    display: block;
+    padding: 0;
+}
+
+.color-container:after{
+	content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.color-item-wrapper{
+	float: left;
+    margin: 4px;
+    
+}
+
+.color-item{
+	float: left;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    margin: 1px;
+    font-size: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+ul{
+	list-style: none;
+}
+
+.w-e-panel-container{
+	width:500px !important;
+	left: 0px !important;
+	margin-left:0px !important;
+}
+.w-e-text-container .w-e-panel-container{
+	left: 0px !important;
+}
+
+div::-webkit-scrollbar{
+  width:5px;
+  height:5px;
+  /**/
+}
+div::-webkit-scrollbar-track{
+  background: rgb(239, 239, 239);
+  border-radius:2px;
+}
+div::-webkit-scrollbar-thumb{
+  background: #bfbfbf;
+  border-radius:10px;
+}
+div::-webkit-scrollbar-thumb:hover{
+  background: #333;
+}
+div::-webkit-scrollbar-corner{
+  background: #179a16;
+}
+</style>
+
+</head>
+
+<body>
+
+	<!-- 	top -->
+	<div id="top">
+		<div class="title">
+			<div class="top_title_left">易网通星级客服工号13360061080正在为您服务</div>
+			<div>
+				<button class="pure-button pure-button-primary">结束沟通</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- 	content -->
+	<div id="content">
+		<!--  left -->
+		<div id="content_left">
+
+			<!-- left_top -->
+			<div id="content_left_top">
+				<div id="msgShow">
+				</div>
+			</div>
+
+			<!-- left_bottom -->
+			<div id="content_left_bottom">
+				<!-- 输入选项菜单 -->
+				<div id="input_menu" style="border-bottom: 1px solid #dcdcdc;">
+					
+				</div>
+
+				<!-- 输入框 -->
+				<div id="msgInput" style="height: 210px;">
+					
+				</div>
+
+				<!-- 发送按钮 -->
+				<div id="input_sendButton">
+					<div class="outter_sendButton">
+						<button class="pure-button pure-button-primary sendButton"
+							onclick="consumerSocket.send();">&nbsp;&nbsp;发送&nbsp;&nbsp;| ▼</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!--  right -->
+		<div id="content_right">
+			<div class="userImg">
+				<img th:src="@{/img/bridge-logo2-skin-0.png}" />
+			</div>
+			<div class="slogan_world">
+				<span>欢迎您的光临，我们将竭诚为您服务!</span>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

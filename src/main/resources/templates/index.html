@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" http-equiv="Access-Control-Allow-Origin" content="*" />
+<title>在线客服控制台</title>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/pure/tables-min.css}">
+<script th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/socket.js}"></script>
+<script th:src="@{/js/page/index.js}"></script>
+
+</head>
+
+<script type="text/javascript">
+	
+</script>
+
+
+<body>
+
+	<div style="margin: 20px 50px 10px 50px;">
+	
+		<div style="text-align: center;"><h2>OnlineCustomerService Monitoring</h2></div>
+	
+		<div style="border-bottom: 1px solid #cccccc;">
+			<h3>System:</h3>
+			<span>startup time：<span th:text="${data.starupTime}"></span></span>；
+			<span>survival time：<span th:text="${data.survivalTime}"></span></span>；
+			<span>total customer：<span th:text="${data.totalCustomer}"></span></span>；
+			<span>total consumer：<span th:text="${data.totalConsumer}"></span></span>；
+		</div>
+		
+		
+		<div>
+			<h3>Customer:</h3>
+			online：<span style="font-weight: 600;"><span th:text="${data.onlineCustomer}"></span></span>
+		</div>
+		<table class="pure-table" style="width: 100%;">
+		    <thead>
+		        <tr>
+		            <th width="80px;">session Id</th>
+		            <th>Online time</th>
+		            <th>current number</th>
+		            <th>total number</th>
+		            <th>total duration</th>
+		        </tr>
+		    </thead>
+		
+		    <tbody>
+		        <tr th:each="customer,status:${data.customerList}">
+		            <td th:text="${customer.session.id}"></td>
+		            <td th:text="${customer.onlineTime}"></td>
+		            <td th:text="${customer.int_currentNumber}"></td>
+		            <td th:text="${customer.int_totalNumber}"></td>
+		            <td th:text="${customer.durationTime}"></td>
+		        </tr>
+		    </tbody>
+		</table>
+		<br>
+		<br>
+		
+		<div>
+			<h3>Consumer:</h3>
+			online：<span style="font-weight: 600;"><span th:text="${data.onlineConsumer}"></span></span>
+		</div>
+		<table class="pure-table" style="width: 100%;">
+		    <thead>
+		        <tr>
+		            <th width="80px;">session Id</th>
+		            <th>online time</th>
+		            <th>customer session id</th>
+		            <th>consultation duration</th>
+		            <th>operation</th>
+		        </tr>
+		    </thead>
+		
+		    <tbody>
+		        <tr th:each="consumer,status:${data.consumerList}">
+		         	<td th:text="${consumer.session.id}"></td>
+		         	<td th:text="${consumer.onlineTime}"></td>
+		         	<td th:text="${consumer.customerSessionId}"></td>
+		         	<td th:text="${consumer.durationTime}"></td>
+		            <td><button>offline</button> <button>transfer</button></td>
+		        </tr>
+		    </tbody>
+		</table>
+		<br>
+		<br>
+		
+		<div style="border-bottom: 1px solid #cccccc;padding-bottom: 10px;">
+			<h3>setting：</h3>
+			Advertisement：
+				<button id="ad" onclick="_index.CloseAd();">
+					<font th:if="${data.isAdReply} eq true">close Ad</font>
+					<font th:if="${data.isAdReply} eq false">open Ad</font>
+				</button> 
+				<button onclick="_index.setInfo(1);">set Ad</button>；
+			AutoReply：
+				<button id="auto" onclick="_index.CloseAuto();">
+					<font th:if="${data.isAutoReply} eq true">close Reply</font>
+					<font th:if="${data.isAutoReply} eq false">open Reply</font>
+				</button>
+				<button onclick="_index.setInfo(2);">set Reply</button>
+		</div>
+	</div>
+
+</body>
+</html>

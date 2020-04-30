@@ -1,0 +1,37 @@
+#font_table, #colorTable {
+	position: absolute;
+	bottom: 170px;
+	left: 50px;
+	width: 500px;
+	flex-wrap: wrap;
+	background-color: #fff;
+	box-shadow: 0px 0px 3px #333333;
+	border-radius: 5px;
+}
+
+.font_img {
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.font_img_active {
+	filter: brightness(30%);
+}
+
+#inner_div {
+	line-height: 2.2;
+}
+
+.fontfamliy {
+	position: absolute;
+	top: 5px;
+	left: 8px;
+}
+
+.fontsize {
+	position: absolute;
+	top: 5px;
+	left: 90px;
+}

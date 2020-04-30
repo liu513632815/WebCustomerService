@@ -1,0 +1,18 @@
+#emo {
+    display: flex;
+    width: 500px;
+    flex-wrap: wrap;
+    background-color: #fff;
+    box-shadow: 0px 0px 3px #333333;
+    border-radius: 5px;
+    display: none;
+}
+
+#emo img {
+    border: 1px solid transparent;
+}
+
+#emo img:hover {
+    border-color: #666666;
+    cursor: pointer;
+}
